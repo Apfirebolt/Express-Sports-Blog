@@ -5,23 +5,23 @@ const passport = require("passport");
 
 // Load User Model
 require("../models/User");
-const User = mongoose.model("users");
+const User = mongoose.model("User");
 
 // User Login Route
 exports.getLoginForm = (req, res) => {
-  res.render("auth/login");
+  res.render("pages/auth/login");
 };
 
 // User Register Route
 exports.getRegisterForm = (req, res) => {
-  res.render("auth/register");
+  res.render("pages/auth/register");
 };
 
 // Login Form POST
 exports.loginUser = (req, res, next) => {
   try {
     passport.authenticate("local", {
-      successRedirect: "/ideas",
+      successRedirect: "/category",
       failureRedirect: "/users/login",
       failureFlash: true,
     })(req, res, next);

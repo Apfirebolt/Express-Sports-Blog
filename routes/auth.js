@@ -9,14 +9,11 @@ const {
   registerUser
 } = require('../controllers/authController.js');
 
-router.route('/register', )
+router.route('/register')
   .get(getRegisterForm)
-  .post(registerUser);
+  .post(registerUser)
 router.route('/login')
+  .get(getLoginForm)
   .post(loginUser)
-  .get(getLoginForm);
-router
-  .route('/logout')
-  .get(logOut)
 
-exports.router = router;
+module.exports = router;

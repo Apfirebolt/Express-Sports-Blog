@@ -5,14 +5,20 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const passport = require("passport");
+const mongoose = require("mongoose");
 const { connectDB } = require("./config/db.js");
 
-dotenv.config();
 const app = express();
 
+// Load routes
+const authRoutes = require('./routes/auth');
 
 // Passport Config
 require('./config/passport')(passport);
+
+dotenv.config();
+// Map global promise - get rid of warning
+mongoose.Promise = global.Promise;
 connectDB();
 
 // ejs template engine
@@ -75,6 +81,9 @@ app.get("/", (req, res) => {
 app.get("/about", (req, res) => {
   res.render("pages/about");
 });
+
+// Use routes
+app.use('/auth', authRoutes);
 
 const port = 5000;
 
