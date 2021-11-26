@@ -9,10 +9,11 @@ const { connectDB } = require("./config/db.js");
 
 dotenv.config();
 const app = express();
-connectDB();
+
 
 // Passport Config
 require('./config/passport')(passport);
+connectDB();
 
 // ejs template engine
 app.set("view engine", "ejs");
