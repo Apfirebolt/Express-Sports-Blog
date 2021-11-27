@@ -8,6 +8,13 @@
 
     <main>
       <h1>Update Category</h1>
+      <form action="/category/update" method="post">
+        <div class="form-group">
+          <label for="blog">Blog/Category Name</label>
+          <input type="text" class="form-control" name="name" placeholder="Enter blog/category name">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
     </main>
 
     <footer><%- include('../../partials/footer'); %></footer>

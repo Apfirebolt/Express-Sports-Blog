@@ -8,6 +8,37 @@
 
     <main>
       <h1>List Category</h1>
+      <table>
+        <tbody></tbody>
+      </table>
+
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Category Name</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% categories.forEach(function(category, index) { %>
+          <tr>
+            <td><%= index %></td>
+            <td><%= category.name %></td>
+            <td><%= category.createdAt %></td>
+            <td>
+              <button class="btn btn-primary">
+                Detail
+              </button>
+              <button class="btn btn-danger">
+                Delete
+              </button>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
     </main>
 
     <footer><%- include('../../partials/footer'); %></footer>

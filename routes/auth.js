@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router()
+const router = express.Router();
 
 const {
   getLoginForm,
@@ -15,5 +15,7 @@ router.route('/register')
 router.route('/login')
   .get(getLoginForm)
   .post(loginUser)
+router.route('/logout')
+  .get(logOut)
 
 module.exports = router;

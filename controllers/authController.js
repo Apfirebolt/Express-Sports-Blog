@@ -1,4 +1,3 @@
-const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
@@ -22,7 +21,7 @@ exports.loginUser = (req, res, next) => {
   try {
     passport.authenticate("local", {
       successRedirect: "/category",
-      failureRedirect: "/users/login",
+      failureRedirect: "/auth/login",
       failureFlash: true,
     })(req, res, next);
   } catch (err) {
@@ -43,7 +42,7 @@ exports.registerUser = (req, res) => {
   }
 
   if (errors.length > 0) {
-    res.render("auth/register", {
+    res.render("pages/auth/register", {
       errors: errors,
       first_name: req.body.first_name,
       last_name: req.body.last_name,

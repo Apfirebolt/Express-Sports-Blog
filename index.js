@@ -12,6 +12,7 @@ const app = express();
 
 // Load routes
 const authRoutes = require('./routes/auth');
+const categoryRoutes = require('./routes/blog');
 
 // Passport Config
 require('./config/passport')(passport);
@@ -84,6 +85,7 @@ app.get("/about", (req, res) => {
 
 // Use routes
 app.use('/auth', authRoutes);
+app.use('/category', categoryRoutes);
 
 const port = 5000;
 
