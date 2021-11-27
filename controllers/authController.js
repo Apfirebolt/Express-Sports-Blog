@@ -23,6 +23,7 @@ exports.loginUser = (req, res, next) => {
       successRedirect: "/category",
       failureRedirect: "/auth/login",
       failureFlash: true,
+      successFlash: 'You are successfully logged in'
     })(req, res, next);
   } catch (err) {
     console.log("Error is ", err);
@@ -91,5 +92,5 @@ exports.registerUser = (req, res) => {
 exports.logOut = (req, res) => {
   req.logout();
   req.flash("success_msg", "You are logged out");
-  res.redirect("/users/login");
+  res.redirect("/auth/login");
 };
