@@ -8,14 +8,21 @@ const {
   getUpdateCategoryForm,
   getCreateCategoryForm,
   detailCategory,
+  getDeleteCategory,
+  deleteCategory,
+  updateCategory,
   listCategory,
 } = require('../controllers/blogController.js');
 
 router.route('/create')
   .get(ensureAuthenticated, getCreateCategoryForm)
   .post(ensureAuthenticated, createCategory)
-router.route('/:categoryId')
-  .get(detailCategory)
+router.route('/:categoryId/delete')
+  .get(ensureAuthenticated, getDeleteCategory)
+  .post(ensureAuthenticated, deleteCategory)
+router.route('/:categoryId/update')
+  .get(ensureAuthenticated, getUpdateCategoryForm)
+  .post(ensureAuthenticated, updateCategory)
 router.route('/')
   .get(ensureAuthenticated, listCategory)
 

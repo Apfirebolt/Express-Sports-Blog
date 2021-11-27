@@ -12,7 +12,32 @@ exports.getCreateCategoryForm = (req, res) => {
 
 // Update Category Form
 exports.getUpdateCategoryForm = (req, res) => {
-  res.render("pages/category/update");
+  try {
+    Category.findOne({ createdBy: req.user._id, _id: req.params.categoryId }).then((category) => {
+      if (category) {
+        res.render("pages/category/update", {
+          category
+        });
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// Confirm Delete Category
+exports.getDeleteCategory = (req, res) => {
+  try {
+    Category.findOne({ createdBy: req.user._id, _id: req.params.categoryId }).then((category) => {
+      if (category) {
+        res.render("pages/category/confirmDelete", {
+          category
+        });
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // Create Category Form POST
@@ -46,7 +71,6 @@ exports.createCategory = (req, res) => {
           })
         }
       });
-      
     } catch (err) {
       console.log(err);
     }
@@ -71,3 +95,30 @@ exports.listCategory = (req, res) => {
     });
   });
 };
+
+// Post Confirm Delete Category
+exports.deleteCategory = (req, res) => {
+  
+  Category.findOneAndDelete({ createdBy: req.user._id, _id: req.params.categoryId }, {
+    useFindAndModify: false
+  }).then((isDeleted) => {
+    if (isDeleted) {
+      req.flash("success_msg", "Category successfully deleted.");
+      res.redirect("/category");
+    }
+  });
+};
+
+// Post Update Category
+exports.updateCategory = (req, res) => {
+  
+  Category.findOneAndUpdate({ createdBy: req.user._id, _id: req.params.categoryId }, { name: req.body.name }, {
+    useFindAndModify: false
+  }).then((isUpdated) => {
+    if (isUpdated) {
+      req.flash("success_msg", "Category successfully updated.");
+      res.redirect("/category");
+    }
+  });
+};
+
