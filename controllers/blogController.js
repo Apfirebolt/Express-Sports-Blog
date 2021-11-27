@@ -84,7 +84,7 @@ exports.createCategory = (req, res) => {
 
 // Detail Category
 exports.detailCategory = (req, res) => {
-  Category.find({ createdBy: req.user._id, _id: req.params.categoryId }).then(
+  Category.findOne({ createdBy: req.user._id, _id: req.params.categoryId }).then(
     (category) => {
       res.render("pages/category/detail", {
         category,

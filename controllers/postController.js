@@ -23,18 +23,16 @@ exports.getCreatePostForm = (req, res) => {
   }
 };
 
-// Update Category Form
-exports.getUpdatePostForm = (req, res) => {
+// Update Post Form
+exports.getUpdatePostForm = async (req, res) => {
   try {
-    Post.findOne({
-      createdBy: req.user._id,
-      _id: req.params.categoryId,
-    }).then((category) => {
-      if (category) {
-        res.render("pages/category/update", {
-          category,
-        });
-      }
+    const categories = await Category.find({});
+    const post = await Post.findOne({
+      _id: req.params.postId
+    })
+    res.render("pages/post/update", {
+      categories,
+      post,
     });
   } catch (err) {
     console.log(err);
@@ -103,6 +101,27 @@ exports.listPost = (req, res) => {
   });
 };
 
+// Update Single Post
+exports.updatePost = (req, res) => {
+  Post.findOneAndUpdate(
+    { _id: req.params.postId },
+    { 
+      title: req.body.title,
+      description: req.body.description,
+      category: req.body.category 
+    },
+    {
+      useFindAndModify: false,
+    }
+  ).then((isUpdated) => {
+    if (isUpdated) {
+      req.flash("success_msg", "Post successfully updated.");
+      res.redirect("/post");
+    }
+  });
+};
+
+
 // Delete Single Post
 exports.deletePost = (req, res) => {
   Post.findOneAndDelete(
@@ -116,4 +135,21 @@ exports.deletePost = (req, res) => {
       res.redirect("/post");
     }
   });
+};
+
+// Details of Single Post
+exports.detailPost = (req, res) => {
+  try {
+    Post.findOne({
+      _id: req.params.postId,
+    }).then((post) => {
+      if (post) {
+        res.render("pages/post/detail", {
+          post,
+        });
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };

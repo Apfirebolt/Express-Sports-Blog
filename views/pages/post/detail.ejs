@@ -9,13 +9,17 @@
     <main>
       <div class="card my-3">
         <div class="card-body">
-          <h5 class="card-title"><%= category.name%></h5>
+          <h5 class="card-title"><%= post.title%></h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+            <%= post.category.name%>
+          </h6>
+          <p class="card-text"><%= post.description%></p>
         </div>
         <div class="card-footer">
-          <a href="/category/<%= category._id%>/update" class="btn btn-success">
+          <a href="/post/<%= post._id%>/update" class="btn btn-success">
             Update
           </a>
-          <a href="/category/<%= category._id%>/delete" class="btn btn-danger">
+          <a href="/post/<%= post._id%>/delete" class="btn btn-danger">
             Delete
           </a>
         </div>

@@ -7,7 +7,37 @@
     <header><%- include('../../partials/header'); %></header>
 
     <main>
-      <h1>Update Post</h1>
+      <h3 class="text-center my-2 text-success">UPDATE POST</h3>
+      <form action="/post/<%= post._id%>/update" method="post" class="w-50 mx-auto my-3">
+        <div class="form-group">
+          <label for="blog">Post Title</label>
+          <input
+            type="text"
+            class="form-control"
+            name="title"
+            value="<%= post.title %>"
+            placeholder="Enter Post Title"
+          />
+        </div>
+        <div class="form-group">
+          <label for="category">Choose Category</label>
+          <select class="form-control" id="category" name="category">
+            <% categories.forEach(function(category, index) { %>
+            <option value="<%= category._id%>"><%= category.name %></option>
+            <% }); %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="description">Post Description</label>
+          <textarea
+            class="form-control"
+            id="description"
+            name="description"
+            rows="3"
+          ><%= post.description %></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
     </main>
 
     <footer><%- include('../../partials/footer'); %></footer>
