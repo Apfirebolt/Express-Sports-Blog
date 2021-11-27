@@ -13,6 +13,7 @@ const app = express();
 // Load routes
 const authRoutes = require('./routes/auth');
 const categoryRoutes = require('./routes/blog');
+const postRoutes = require('./routes/post');
 
 // Passport Config
 require('./config/passport')(passport);
@@ -78,14 +79,10 @@ app.get("/", (req, res) => {
   });
 });
 
-// About Route
-app.get("/about", (req, res) => {
-  res.render("pages/about");
-});
-
 // Use routes
 app.use('/auth', authRoutes);
 app.use('/category', categoryRoutes);
+app.use('/post', postRoutes);
 
 const port = 5000;
 

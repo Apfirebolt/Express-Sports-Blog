@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 // Load Blog Model
 require("../models/Category");
-require("../models/User");
 const Category = mongoose.model("Category");
 
 // Create Category Form
@@ -13,10 +12,13 @@ exports.getCreateCategoryForm = (req, res) => {
 // Update Category Form
 exports.getUpdateCategoryForm = (req, res) => {
   try {
-    Category.findOne({ createdBy: req.user._id, _id: req.params.categoryId }).then((category) => {
+    Category.findOne({
+      createdBy: req.user._id,
+      _id: req.params.categoryId,
+    }).then((category) => {
       if (category) {
         res.render("pages/category/update", {
-          category
+          category,
         });
       }
     });
@@ -28,10 +30,13 @@ exports.getUpdateCategoryForm = (req, res) => {
 // Confirm Delete Category
 exports.getDeleteCategory = (req, res) => {
   try {
-    Category.findOne({ createdBy: req.user._id, _id: req.params.categoryId }).then((category) => {
+    Category.findOne({
+      createdBy: req.user._id,
+      _id: req.params.categoryId,
+    }).then((category) => {
       if (category) {
         res.render("pages/category/confirmDelete", {
-          category
+          category,
         });
       }
     });
@@ -64,11 +69,11 @@ exports.createCategory = (req, res) => {
             name: req.body.name,
             createdBy: req.user._id,
           })
-          .save()
-          .then(category => {
-            req.flash('success_msg', 'Category created successfully.');
-            res.redirect('/category');
-          })
+            .save()
+            .then((category) => {
+              req.flash("success_msg", "Category created successfully.");
+              res.redirect("/category");
+            });
         }
       });
     } catch (err) {
@@ -79,16 +84,17 @@ exports.createCategory = (req, res) => {
 
 // Detail Category
 exports.detailCategory = (req, res) => {
-  Category.find({ createdBy: req.user._id, _id: req.params.categoryId }).then((category) => {
-    res.render("pages/category/detail", {
-      category,
-    });
-  });
+  Category.find({ createdBy: req.user._id, _id: req.params.categoryId }).then(
+    (category) => {
+      res.render("pages/category/detail", {
+        category,
+      });
+    }
+  );
 };
 
 // List Category
 exports.listCategory = (req, res) => {
-  
   Category.find({ createdBy: req.user._id }).then((categories) => {
     res.render("pages/category/list", {
       categories,
@@ -98,10 +104,12 @@ exports.listCategory = (req, res) => {
 
 // Post Confirm Delete Category
 exports.deleteCategory = (req, res) => {
-  
-  Category.findOneAndDelete({ createdBy: req.user._id, _id: req.params.categoryId }, {
-    useFindAndModify: false
-  }).then((isDeleted) => {
+  Category.findOneAndDelete(
+    { createdBy: req.user._id, _id: req.params.categoryId },
+    {
+      useFindAndModify: false,
+    }
+  ).then((isDeleted) => {
     if (isDeleted) {
       req.flash("success_msg", "Category successfully deleted.");
       res.redirect("/category");
@@ -111,14 +119,16 @@ exports.deleteCategory = (req, res) => {
 
 // Post Update Category
 exports.updateCategory = (req, res) => {
-  
-  Category.findOneAndUpdate({ createdBy: req.user._id, _id: req.params.categoryId }, { name: req.body.name }, {
-    useFindAndModify: false
-  }).then((isUpdated) => {
+  Category.findOneAndUpdate(
+    { createdBy: req.user._id, _id: req.params.categoryId },
+    { name: req.body.name },
+    {
+      useFindAndModify: false,
+    }
+  ).then((isUpdated) => {
     if (isUpdated) {
       req.flash("success_msg", "Category successfully updated.");
       res.redirect("/category");
     }
   });
 };
-
