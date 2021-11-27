@@ -46,14 +46,25 @@ exports.createCategory = (req, res) => {
           })
         }
       });
+      
     } catch (err) {
       console.log(err);
     }
   }
 };
 
+// Detail Category
+exports.detailCategory = (req, res) => {
+  Category.find({ createdBy: req.user._id, _id: req.params.categoryId }).then((category) => {
+    res.render("pages/category/detail", {
+      category,
+    });
+  });
+};
+
 // List Category
 exports.listCategory = (req, res) => {
+  
   Category.find({ createdBy: req.user._id }).then((categories) => {
     res.render("pages/category/list", {
       categories,

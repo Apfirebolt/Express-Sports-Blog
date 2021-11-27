@@ -7,6 +7,12 @@
     <header><%- include('../../partials/header'); %></header>
 
     <main>
+      <% if ( success_msg.length ) { %>
+        <div class="alert alert-success"><%= success_msg %></div>
+      <% } %>
+      <% if ( error_msg.length ) { %>
+        <div class="alert alert-danger"><%= error_msg %></div>
+      <% } %>
       <h1>List Category</h1>
       <table>
         <tbody></tbody>
