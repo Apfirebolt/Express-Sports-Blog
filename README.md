@@ -38,6 +38,13 @@ complex queries.
 - It has 3 models namely 'User', 'Blog' and 'Post'.
 - No nested document approach as been adopted, instead Object references are used by establishing Foreign key relationship where ever required within the application.
 
+## Production Deployment
+
+- Docker containers are used for deploying this.
+- You can own a virtual server or configure your ECS AWS instances with Docker and Docker Compose to deploy this.
+- Internal network of containers is created through Docker Compose which would link Nginx, Express and MongoDB all running on separate containers.
+- Change env variables accordingly otherwise, connection establishment to MongoDB running inside a container would fail.
+
 ## Project Screenshots
 
 Please find some of the screenshots of the application. Below is the screenshot of the Register Page.
