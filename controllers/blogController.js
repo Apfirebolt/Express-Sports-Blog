@@ -135,3 +135,4 @@ exports.updateCategory = (req, res) => {
     }
   });
 };
+

@@ -40,8 +40,25 @@ complex queries.
 
 ## Project Screenshots
 
-Work is still in progress on certain UI aspects of this project, screenshots would be uploaded once UI changes are finalized.
+Please find some of the screenshots of the application. Below is the screenshot of the Register Page.
 
+![alt text](./screenshots/register.png)
+
+Login Page.
+
+![alt text](./screenshots/login.png)
+
+Add Post, posts can be added within category. CRUD on Posts is supported.
+
+![alt text](./screenshots/create_post.png)
+
+Screenshot below shows list of posts.
+
+![alt text](./screenshots/post_list.png)
+
+Screenshot below shows list of categories
+
+![alt text](./screenshots/category_list.png)
 
 
 
