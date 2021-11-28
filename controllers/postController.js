@@ -28,7 +28,8 @@ exports.getUpdatePostForm = async (req, res) => {
   try {
     const categories = await Category.find({});
     const post = await Post.findOne({
-      _id: req.params.postId
+      _id: req.params.postId,
+      createdBy: req.user._id
     })
     res.render("pages/post/update", {
       categories,
@@ -44,6 +45,7 @@ exports.getDeletePost = (req, res) => {
   try {
     Post.findOne({
       _id: req.params.postId,
+      createdBy: req.user._id
     }).then((post) => {
       if (post) {
         res.render("pages/post/confirmDelete", {
@@ -80,6 +82,7 @@ exports.createPost = (req, res) => {
         title: req.body.title,
         description: req.body.description,
         category: req.body.category,
+        createdBy: req.user._id
       })
         .save()
         .then((post) => {
@@ -94,7 +97,7 @@ exports.createPost = (req, res) => {
 
 // List Post
 exports.listPost = (req, res) => {
-  Post.find().then((posts) => {
+  Post.find({}).then((posts) => {
     res.render("pages/post/list", {
       posts,
     });
@@ -104,7 +107,10 @@ exports.listPost = (req, res) => {
 // Update Single Post
 exports.updatePost = (req, res) => {
   Post.findOneAndUpdate(
-    { _id: req.params.postId },
+    { 
+      _id: req.params.postId,
+      createdBy: req.user._id
+    },
     { 
       title: req.body.title,
       description: req.body.description,
@@ -125,7 +131,10 @@ exports.updatePost = (req, res) => {
 // Delete Single Post
 exports.deletePost = (req, res) => {
   Post.findOneAndDelete(
-    { _id: req.params.postId },
+    { 
+      _id: req.params.postId,
+      createdBy: req.user._id
+    },
     {
       useFindAndModify: false,
     }
@@ -142,6 +151,7 @@ exports.detailPost = (req, res) => {
   try {
     Post.findOne({
       _id: req.params.postId,
+      createdBy: req.user._id
     }).then((post) => {
       if (post) {
         res.render("pages/post/detail", {
