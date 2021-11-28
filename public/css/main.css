@@ -1,3 +1,12 @@
 .wrapped-space {
     white-space: pre-wrap;
 }
+
+body {
+    background: url('../images/652953.jpg');
+}
+
+main {
+    background-color: aliceblue;
+    padding: 0.5rem 1rem;
+}
