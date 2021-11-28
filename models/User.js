@@ -23,6 +23,11 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  isAdmin: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
 });
 
 mongoose.model('User', UserSchema);

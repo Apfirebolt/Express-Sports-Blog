@@ -122,7 +122,8 @@ exports.deleteCategory = (req, res) => {
 // Post Update Category
 exports.updateCategory = (req, res) => {
   Category.findOneAndUpdate(
-    { createdBy: req.user._id, _id: req.params.categoryId },
+    { 
+      createdBy: req.user._id, _id: req.params.categoryId },
     { name: req.body.name },
     {
       useFindAndModify: false,
