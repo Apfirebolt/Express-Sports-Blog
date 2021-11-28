@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 
 // Load Blog Model
 require("../models/Category");
@@ -98,6 +99,7 @@ exports.listCategory = (req, res) => {
   Category.find({ createdBy: req.user._id }).then((categories) => {
     res.render("pages/category/list", {
       categories,
+      moment
     });
   });
 };

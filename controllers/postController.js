@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 
 // Load Blog Model
 require("../models/Category");
@@ -85,9 +86,9 @@ exports.createPost = (req, res) => {
         createdBy: req.user._id
       })
         .save()
-        .then((post) => {
+        .then(() => {
           req.flash("success_msg", "Post created successfully.");
-          res.redirect("/category");
+          res.redirect("/post");
         });
     } catch (err) {
       console.log(err);
@@ -97,9 +98,12 @@ exports.createPost = (req, res) => {
 
 // List Post
 exports.listPost = (req, res) => {
-  Post.find({}).then((posts) => {
+  Post.find({})
+  .populate('category')
+  .then((posts) => {
     res.render("pages/post/list", {
       posts,
+      moment
     });
   });
 };

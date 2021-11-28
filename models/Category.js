@@ -16,4 +16,8 @@ const categorySchema = new mongoose.Schema(
   }
 );
 
+categorySchema.pre('remove', function(next) {
+  this.model('Post').remove({ category: this._id }, next);
+});
+
 mongoose.model("Category", categorySchema);

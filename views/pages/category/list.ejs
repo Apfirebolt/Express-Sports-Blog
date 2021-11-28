@@ -29,7 +29,7 @@
           <tr>
             <td><%= index %></td>
             <td><%= category.name %></td>
-            <td><%= category.createdAt %></td>
+            <td><%= moment(category.createdAt).format('hh:mm a MMM DD YYYY') %></td>
             <td>
               <a href="category/<%= category._id%>/detail" class="btn btn-primary">
                 Detail

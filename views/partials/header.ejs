@@ -2,6 +2,7 @@
   <a class="navbar-brand" href="/">Express Sports</a>
   <img src="/images/Soccer_ball.svg.png" height="40" width="50" class="m-2">
   <% if(user){ %>
+  <h5 class="ml-3 text-secondary">Hello, <%= user.first_name%></h5>
   <ul class="navbar-nav ml-auto">
     <li class="nav-item">
       <a class="nav-link" href="/">Home</a>
@@ -19,7 +20,7 @@
       <a class="nav-link" href="/post/create">Add Post</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/auth/logout">Log Out</a>
+      <a class="nav-link btn btn-warning" href="/auth/logout">Log Out</a>
     </li>
   </ul>
   <% } else{ %>

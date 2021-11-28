@@ -19,7 +19,8 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Title</th>
-            <th scope="col">Description</th>
+            <th scope="col">Category</th>
+            <th scope="col">Created At</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
@@ -28,7 +29,8 @@
           <tr>
             <td><%= index %></td>
             <td><%= post.title %></td>
-            <td><%= post.description %></td>
+            <td><%= post.category.name ? post.category.name : 'Not available' %></td>
+            <td><%= moment(post.createdAt).format('hh:mm a MMM DD YYYY') %></td>
             <td>
               <a href="post/<%= post._id%>/detail" class="btn btn-primary">
                 Detail
