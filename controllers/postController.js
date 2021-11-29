@@ -41,6 +41,21 @@ exports.getUpdatePostForm = async (req, res) => {
   }
 };
 
+// Add Image Form
+exports.getAddImageForm = async (req, res) => {
+  try {
+    const post = await Post.findOne({
+      _id: req.params.postId,
+      createdBy: req.user._id
+    })
+    res.render("pages/post/addImage", {
+      post,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 // Confirm Delete Post
 exports.getDeletePost = (req, res) => {
   try {
@@ -166,4 +181,27 @@ exports.detailPost = (req, res) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+// Add images to a single post
+exports.addImage = (req, res) => {
+  const newPicture = {
+    title: req.body.title,
+    name: req.file.filename
+  }
+  Post.findOneAndUpdate(
+    { 
+      _id: req.params.postId,
+      createdBy: req.user._id
+    },
+    { $push: { pictures: newPicture } },
+    {
+      useFindAndModify: false,
+    }
+  ).then((isUpdated) => {
+    if (isUpdated) {
+      req.flash("success_msg", "Image successfully added to the post.");
+      res.redirect("/post");
+    }
+  });
 };

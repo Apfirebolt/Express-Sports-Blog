@@ -3,15 +3,19 @@ const router = express.Router();
 
 const { ensureAuthenticated } = require('../helpers/auth');
 
+const { upload } = require('../utils/file-upload');
+
 const {
   createPost,
   getUpdatePostForm,
   getCreatePostForm,
+  getAddImageForm,
   listPost,
   deletePost,
   updatePost,
   detailPost,
-  getDeletePost
+  getDeletePost,
+  addImage
 } = require('../controllers/postController.js');
 
 router.route('/')
@@ -27,4 +31,7 @@ router.route('/:postId/delete')
 router.route('/:postId/update')
   .get(ensureAuthenticated, getUpdatePostForm)
   .post(ensureAuthenticated, updatePost)
+router.route('/:postId/images')
+  .get(ensureAuthenticated, getAddImageForm)
+  .post(ensureAuthenticated, upload.single('file'), addImage)
 module.exports = router;

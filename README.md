@@ -45,6 +45,12 @@ complex queries.
 - Internal network of containers is created through Docker Compose which would link Nginx, Express and MongoDB all running on separate containers.
 - Change env variables accordingly otherwise, connection establishment to MongoDB running inside a container would fail.
 
+## Future Requirements
+
+- Comments functionality to be added to each post.
+- Adding images to each post.
+- Profile Settings of the logged in user.
+
 ## Project Screenshots
 
 Please find some of the screenshots of the application. Below is the screenshot of the Register Page.

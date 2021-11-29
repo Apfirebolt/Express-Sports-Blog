@@ -15,7 +15,23 @@
           </h6>
           <p class="card-text wrapped-space"><%= post.description%></p>
         </div>
+        <% if(!post.pictures){ %>
+          <h4 class="text-center my-2 text-secondary">No pictures available for this post</h4>
+        <% } else{ %>  
+          <div class="row justify-content-center flex-wrap py-2">
+            <% for(var i=0; i<post.pictures.length; i++) {%>
+              <div class="col-md-4 text-center">
+                <p class="text-success my-2 text-center"><%= post.pictures[i].title %></p>
+                <img src="/uploads/<%= post.pictures[i].name%>" alt="Image not available" class="post-image">
+              </div>
+            <% } %>
+          </div>
+       <% } %>
+        
         <div class="card-footer">
+          <a href="/post/<%= post._id%>/images" class="btn btn-secondary">
+            Add Image
+          </a>
           <a href="/post/<%= post._id%>/update" class="btn btn-success">
             Update
           </a>
