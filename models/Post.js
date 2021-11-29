@@ -18,6 +18,16 @@ const postSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    pictures: [{
+      name: {
+        type: String,
+        required: true
+      },
+      title: {
+        type: String,
+        required: false
+      },
+    }],
   },
   {
     timestamps: true,
