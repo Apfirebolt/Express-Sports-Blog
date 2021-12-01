@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
+const ObjectId = require('mongodb').ObjectID;
 
 // Load Blog Model
 require("../models/Category");
@@ -50,6 +51,23 @@ exports.getAddImageForm = async (req, res) => {
     })
     res.render("pages/post/addImage", {
       post,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// Delete Image Form
+exports.getDeleteImageForm = async (req, res) => {
+  try {
+    const post = await Post.findOne({
+      _id: req.params.postId,
+      createdBy: req.user._id
+    })
+    const selectedImage = post.pictures.find((item) => item._id.toHexString() === req.params.imageId);
+    res.render("pages/post/confirmDeleteImage", {
+      post,
+      image: selectedImage
     });
   } catch (err) {
     console.log(err);
@@ -201,6 +219,25 @@ exports.addImage = (req, res) => {
   ).then((isUpdated) => {
     if (isUpdated) {
       req.flash("success_msg", "Image successfully added to the post.");
+      res.redirect("/post");
+    }
+  });
+};
+
+// Delete Single Image from a post
+exports.deleteImage = (req, res) => {
+  Post.findOneAndUpdate(
+    { 
+      _id: req.params.postId,
+      createdBy: req.user._id
+    },
+    {$pull: {'pictures': {'_id': ObjectId(req.params.imageId)}}},
+    {
+      useFindAndModify: false,
+    }
+  ).then((isUpdated) => {
+    if (isUpdated) {
+      req.flash("success_msg", "Image successfully deleted from the post.");
       res.redirect("/post");
     }
   });

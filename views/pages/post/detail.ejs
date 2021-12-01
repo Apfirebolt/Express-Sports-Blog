@@ -23,6 +23,9 @@
               <div class="col-md-4 text-center">
                 <p class="text-success my-2 text-center"><%= post.pictures[i].title %></p>
                 <img src="/uploads/<%= post.pictures[i].name%>" alt="Image not available" class="post-image">
+                <a href="/post/<%= post._id%>/images/<%= post.pictures[i]._id%>/delete" class="btn btn-danger mx-auto my-2">
+                  Delete Image
+                </a>
               </div>
             <% } %>
           </div>
