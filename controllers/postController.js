@@ -74,6 +74,38 @@ exports.getDeleteImageForm = async (req, res) => {
   }
 };
 
+// Add Video Form
+exports.getAddVideoForm = async (req, res) => {
+  try {
+    const post = await Post.findOne({
+      _id: req.params.postId,
+      createdBy: req.user._id
+    })
+    res.render("pages/post/addVideo", {
+      post,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// Delete Video Form
+exports.getDeleteVideoForm = async (req, res) => {
+  try {
+    const post = await Post.findOne({
+      _id: req.params.postId,
+      createdBy: req.user._id
+    })
+    const selectedImage = post.pictures.find((item) => item._id.toHexString() === req.params.imageId);
+    res.render("pages/post/confirmDeleteImage", {
+      post,
+      image: selectedImage
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 // Confirm Delete Post
 exports.getDeletePost = (req, res) => {
   try {
@@ -241,4 +273,28 @@ exports.deleteImage = (req, res) => {
       res.redirect("/post");
     }
   });
+};
+
+// Add video to a single post
+exports.addVideo = (req, res) => {
+  const newVideo = {
+    video: req.file.filename
+  }
+  console.log('New video ', newVideo);
+  Post.findOneAndUpdate(
+    { 
+      _id: req.params.postId,
+      createdBy: req.user._id
+    },
+    {
+      useFindAndModify: false,
+    }
+  ).then((isUpdated) => {
+    if (isUpdated) {
+      req.flash("success_msg", "Video successfully added to the post.");
+      res.redirect("/post");
+    }
+  }).catch((err) => {
+    console.log('Error is ', err);
+  })
 };

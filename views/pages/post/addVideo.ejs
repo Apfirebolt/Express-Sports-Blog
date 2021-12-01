@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../../partials/head'); %>
+  </head>
+  <body class="container">
+    <header><%- include('../../partials/header'); %></header>
+
+    <main>
+      <h3 class="text-center my-2 text-success">ADD VIDEO</h3>
+      <form
+        action="/post/<%= post._id%>/video"
+        method="post"
+        class="w-50 mx-auto my-3"
+        enctype="multipart/form-data"
+      >
+        <div class="form-group">
+          <label for="file">Upload Video</label>
+          <input
+            type="file"
+            name="file"
+            class="form-control-file"
+            id="file"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </main>
+
+    <footer><%- include('../../partials/footer'); %></footer>
+  </body>
+</html>
