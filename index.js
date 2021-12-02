@@ -84,6 +84,12 @@ app.use('/auth', authRoutes);
 app.use('/category', categoryRoutes);
 app.use('/post', postRoutes);
 
+app.use((error, req, res, next) => {
+  res.render("pages/error", {
+    message: error.message,
+  });
+})
+
 const port = 5000;
 
 app.listen(port, () => {

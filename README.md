@@ -50,6 +50,11 @@ complex queries.
 - Comments functionality to be added to each post.
 - Adding images to each post.
 - Profile Settings of the logged in user.
+- Adding video with each post (DONE).
+
+## Updates
+
+- Adding videos to post functionality completed, only a single video can be added to each post. Screenshots have been added for the same, max size for the video you can upload is 10 MB.
 
 ## Project Screenshots
 
@@ -73,5 +78,12 @@ Screenshot below shows list of categories
 
 ![alt text](./screenshots/category_list.png)
 
+Screenshot below shows the added video being played on the post detail page.
+
+![alt text](./screenshots/video.png)
+
+Screenshot below delete video screen where you can delete the video you added to a post. Direct update for now is not supported, you'd have to delete the video previously associated with a post to add a new video to the post.
+
+![alt text](./screenshots/delete_video.png)
 
 

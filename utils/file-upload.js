@@ -28,7 +28,7 @@ function checkFileType(file, cb) {
   if (extname && mimetype) {
     return cb(null, true);
   } else {
-    cb("Images only!");
+    return cb(new Error('Only jpeg, jpg and png images are allowed'));
   }
 }
 
@@ -40,7 +40,7 @@ function checkVideoFileType(file, cb) {
   if (extname && mimetype) {
     return cb(null, true);
   } else {
-    cb("Video only!");
+    return cb(new Error('Only mp4 video format is allowed'));
   }
 }
 
