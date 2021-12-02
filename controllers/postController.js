@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
 const ObjectId = require('mongodb').ObjectID;
+const fs = require('fs');
+const path = require('path');
 
 // Load Blog Model
 require("../models/Category");
@@ -267,6 +269,11 @@ exports.deleteImage = (req, res) => {
     }
   ).then((isUpdated) => {
     if (isUpdated) {
+      selectedImage = isUpdated.pictures.find((item) => item._id.toHexString() === req.params.imageId);
+      const filePath = path.join(__dirname, `../uploads/${selectedImage.name}`);
+      fs.unlink(filePath, (err => {
+        if (err) console.log(err);
+      }));
       req.flash("success_msg", "Image successfully deleted from the post.");
       res.redirect("/post");
     }
@@ -283,7 +290,7 @@ exports.addVideo = (req, res) => {
     { $set: { video: req.file.filename } },
     {
       useFindAndModify: false,
-    }
+    },
   ).then((isUpdated) => {
     if (isUpdated) {
       req.flash("success_msg", "Video successfully added to the post.");
@@ -307,6 +314,10 @@ exports.deleteVideo = (req, res) => {
     }
   ).then((isUpdated) => {
     if (isUpdated) {
+      const filePath = path.join(__dirname, `../uploads/${isUpdated.video}`);
+      fs.unlink(filePath, (err => {
+        if (err) console.log(err);
+      }));
       req.flash("success_msg", "Video successfully deleted from the post.");
       res.redirect("/post");
     }
