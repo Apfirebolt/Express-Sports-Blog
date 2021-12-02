@@ -96,10 +96,8 @@ exports.getDeleteVideoForm = async (req, res) => {
       _id: req.params.postId,
       createdBy: req.user._id
     })
-    const selectedImage = post.pictures.find((item) => item._id.toHexString() === req.params.imageId);
-    res.render("pages/post/confirmDeleteImage", {
+    res.render("pages/post/confirmDeleteVideo", {
       post,
-      image: selectedImage
     });
   } catch (err) {
     console.log(err);
@@ -277,21 +275,39 @@ exports.deleteImage = (req, res) => {
 
 // Add video to a single post
 exports.addVideo = (req, res) => {
-  const newVideo = {
-    video: req.file.filename
-  }
-  console.log('New video ', newVideo);
   Post.findOneAndUpdate(
     { 
       _id: req.params.postId,
       createdBy: req.user._id
     },
+    { $set: { video: req.file.filename } },
     {
       useFindAndModify: false,
     }
   ).then((isUpdated) => {
     if (isUpdated) {
       req.flash("success_msg", "Video successfully added to the post.");
+      res.redirect("/post");
+    }
+  }).catch((err) => {
+    console.log('Error is ', err);
+  })
+};
+
+// Delete video associated with Post
+exports.deleteVideo = (req, res) => {
+  Post.findOneAndUpdate(
+    { 
+      _id: req.params.postId,
+      createdBy: req.user._id
+    },
+    { $set: { video: '' } },
+    {
+      useFindAndModify: false,
+    }
+  ).then((isUpdated) => {
+    if (isUpdated) {
+      req.flash("success_msg", "Video successfully deleted from the post.");
       res.redirect("/post");
     }
   }).catch((err) => {

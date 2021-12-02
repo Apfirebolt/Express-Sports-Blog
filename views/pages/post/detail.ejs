@@ -30,7 +30,18 @@
             <% } %>
           </div>
        <% } %>
-        
+       <% if(post.video){ %>
+        <video class="mx-auto my-3" width="520" height="400" controls>
+          <source src="/uploads/<%= post.video%>" type="video/mp4">
+          <source src="movie.ogg" type="video/ogg">
+          Your browser does not support the video tag.
+        </video>
+        <a href="/post/<%= post._id%>/video/delete" class="btn btn-danger mx-auto my-2">
+          Delete Video
+        </a>
+      <% } else{ %>  
+        <p class="text-center text-info">No video associated with this post</p>
+     <% } %>
         <div class="card-footer">
           <a href="/post/<%= post._id%>/images" class="btn btn-secondary">
             Add Image
