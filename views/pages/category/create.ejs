@@ -8,6 +8,11 @@
 
     <main>
       <h3 class="text-center my-2 text-success">CREATE CATEGORY</h3>
+      <% if(errors && errors.length){ %>
+        <% for(let i=0; i<errors.length; i++) {%>
+          <p class="alert alert-danger"><%= errors[i] %></p>
+       <% } %>
+      <% } %>
       <form action="/category/create" method="post" class="w-50 mx-auto my-3">
         <div class="form-group">
           <label for="blog">Blog/Category Name</label>

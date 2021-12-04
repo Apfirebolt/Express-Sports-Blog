@@ -125,22 +125,24 @@ exports.getDeletePost = (req, res) => {
 };
 
 // Create Category Form POST
-exports.createPost = (req, res) => {
+exports.createPost = async (req, res) => {
   let errors = [];
 
   if (!req.body.title) {
-    errors.push({ text: "Post Title cannot be empty" });
+    errors.push("Post Title cannot be empty");
   }
 
   if (!req.body.description) {
-    errors.push({ text: "Post Description cannot be empty" });
+    errors.push("Post Description cannot be empty");
   }
 
   if (errors.length > 0) {
+    const categories = await Category.find({ createdBy: req.user._id })
     res.render("pages/post/create", {
       errors: errors,
       title: req.body.title,
-      description: req.body.description
+      description: req.body.description,
+      categories
     });
   } else {
     try {
@@ -175,25 +177,30 @@ exports.listPost = (req, res) => {
 
 // Update Single Post
 exports.updatePost = (req, res) => {
-  Post.findOneAndUpdate(
-    { 
-      _id: req.params.postId,
-      createdBy: req.user._id
-    },
-    { 
-      title: req.body.title,
-      description: req.body.description,
-      category: req.body.category 
-    },
-    {
-      useFindAndModify: false,
-    }
-  ).then((isUpdated) => {
-    if (isUpdated) {
-      req.flash("success_msg", "Post successfully updated.");
-      res.redirect("/post");
-    }
-  });
+  if (!req.body.title || !req.body.description) {
+    req.flash("error_msg", "Post Title and Description are required.");
+    res.redirect("/post");
+  } else {
+    Post.findOneAndUpdate(
+      { 
+        _id: req.params.postId,
+        createdBy: req.user._id
+      },
+      { 
+        title: req.body.title,
+        description: req.body.description,
+        category: req.body.category 
+      },
+      {
+        useFindAndModify: false,
+      }
+    ).then((isUpdated) => {
+      if (isUpdated) {
+        req.flash("success_msg", "Post successfully updated.");
+        res.redirect("/post");
+      }
+    });
+  }
 };
 
 

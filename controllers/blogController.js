@@ -1,3 +1,4 @@
+const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 const moment = require("moment");
 
@@ -7,7 +8,9 @@ const Category = mongoose.model("Category");
 
 // Create Category Form
 exports.getCreateCategoryForm = (req, res) => {
-  res.render("pages/category/create");
+  res.render("pages/category/create", {
+    errors: [],
+  });
 };
 
 // Update Category Form
@@ -48,16 +51,12 @@ exports.getDeleteCategory = (req, res) => {
 
 // Create Category Form POST
 exports.createCategory = (req, res) => {
-  let errors = [];
-
-  if (!req.body.name) {
-    errors.push({ text: "Blog Category cannot be empty" });
-  }
-
-  if (errors.length > 0) {
-    res.render("pages/auth/register", {
-      errors: errors,
-      name: req.body.name,
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const fieldErrors = [];
+    errors.errors.forEach((item) => fieldErrors.push(item.msg));
+    return res.render("pages/category/create", {
+      errors: fieldErrors,
     });
   } else {
     try {
@@ -99,7 +98,8 @@ exports.listCategory = (req, res) => {
   Category.find({ createdBy: req.user._id }).then((categories) => {
     res.render("pages/category/list", {
       categories,
-      moment
+      moment,
+      errors: []
     });
   });
 };
@@ -120,19 +120,25 @@ exports.deleteCategory = (req, res) => {
 };
 
 // Post Update Category
-exports.updateCategory = (req, res) => {
-  Category.findOneAndUpdate(
-    { 
-      createdBy: req.user._id, _id: req.params.categoryId },
-    { name: req.body.name },
-    {
-      useFindAndModify: false,
-    }
-  ).then((isUpdated) => {
-    if (isUpdated) {
-      req.flash("success_msg", "Category successfully updated.");
-      res.redirect("/category");
-    }
-  });
+exports.updateCategory = async (req, res) => {
+  if (!req.body.name) {
+    req.flash("error_msg", "Category name is required.");
+    res.redirect("/category");
+  } else {
+    Category.findOneAndUpdate(
+      {
+        createdBy: req.user._id, _id: req.params.categoryId
+      },
+      { name: req.body.name },
+      {
+        useFindAndModify: false,
+      }
+    ).then((isUpdated) => {
+      if (isUpdated) {
+        req.flash("success_msg", "Category successfully updated.");
+        res.redirect("/category");
+      }
+    });
+  }
 };
 
