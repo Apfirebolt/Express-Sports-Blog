@@ -1,3 +1,4 @@
+const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
@@ -8,22 +9,34 @@ const User = mongoose.model("User");
 
 // User Login Route
 exports.getLoginForm = (req, res) => {
-  res.render("pages/auth/login");
+  res.render("pages/auth/login", {
+    errors: [],
+  });
 };
 
 // User Register Route
 exports.getRegisterForm = (req, res) => {
-  res.render("pages/auth/register");
+  res.render("pages/auth/register", {
+    errors: []
+  });
 };
 
 // Login Form POST
 exports.loginUser = (req, res, next) => {
   try {
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const fieldErrors = [];
+      errors.errors.forEach((item) => fieldErrors.push(item.msg));
+      return res.render("pages/auth/login", {
+        errors: fieldErrors,
+      });
+    }
     passport.authenticate("local", {
       successRedirect: "/category",
       failureRedirect: "/auth/login",
       failureFlash: true,
-      successFlash: 'You are successfully logged in'
+      successFlash: "You are successfully logged in",
     })(req, res, next);
   } catch (err) {
     console.log("Error is ", err);
@@ -32,24 +45,12 @@ exports.loginUser = (req, res, next) => {
 
 // Register Form POST
 exports.registerUser = (req, res) => {
-  let errors = [];
-
-  if (req.body.password != req.body.password2) {
-    errors.push({ text: "Passwords do not match" });
-  }
-
-  if (req.body.password.length < 4) {
-    errors.push({ text: "Password must be at least 4 characters" });
-  }
-
-  if (errors.length > 0) {
-    res.render("pages/auth/register", {
-      errors: errors,
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      email: req.body.email,
-      password: req.body.password,
-      password2: req.body.password2,
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const fieldErrors = [];
+    errors.errors.forEach((item) => fieldErrors.push(item.msg));
+    return res.render("pages/auth/register", {
+      errors: fieldErrors,
     });
   } else {
     User.findOne({ email: req.body.email }).then((user) => {
