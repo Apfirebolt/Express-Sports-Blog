@@ -15,3 +15,9 @@ main {
     max-width: 300px;
     max-height: 300px;
 }
+
+.delete-image {
+    max-width: 500px;
+    max-height: 500px;
+    margin: 0.5rem auto;
+}

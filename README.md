@@ -86,4 +86,9 @@ Screenshot below delete video screen where you can delete the video you added to
 
 ![alt text](./screenshots/delete_video.png)
 
+###### Update : 
+
+Carousel functionality for the gallery section was added recently. Below is the screenshot of it.
+
+![alt text](./screenshots/carousel.jpg)
 
