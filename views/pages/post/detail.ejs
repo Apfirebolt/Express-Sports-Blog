@@ -15,7 +15,7 @@
           </h6>
           <p class="card-text wrapped-space"><%- post.description%></p>
         </div>
-        <% if(!post.pictures){ %>
+        <% if(!post.pictures.length){ %>
           <h4 class="text-center my-2 text-secondary">No pictures available for this post</h4>
         <% } else{ %>
           <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">

@@ -90,6 +90,10 @@ app.use((error, req, res, next) => {
   });
 })
 
+app.get('*', (req, res) => {
+  res.render("pages/notFound");
+});
+
 const port = 5000;
 
 app.listen(port, () => {
