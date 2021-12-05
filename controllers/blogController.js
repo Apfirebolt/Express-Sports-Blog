@@ -118,7 +118,7 @@ exports.listCategory = (req, res) => {
 
 // Post Confirm Delete Category
 exports.deleteCategory = (req, res) => {
-  Category.findOneAndDelete(
+  Category.deleteOne(
     { createdBy: req.user._id, _id: req.params.categoryId },
     {
       useFindAndModify: false,

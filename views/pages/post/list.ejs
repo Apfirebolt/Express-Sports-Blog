@@ -28,9 +28,7 @@
           <tr>
             <td><%= index %></td>
             <td><%= post.title %></td>
-            <td>
-              <%= post.category.name ? post.category.name : 'Not available' %>
-            </td>
+            
             <td><%= moment(post.createdAt).format('hh:mm a MMM DD YYYY') %></td>
             <td>
               <a href="post/<%= post._id%>/detail" class="btn btn-primary">

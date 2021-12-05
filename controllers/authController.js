@@ -21,6 +21,18 @@ exports.getRegisterForm = (req, res) => {
   });
 };
 
+// User Settings Route
+exports.getSettingsForm = (req, res) => {
+  User.findOne({
+    _id: req.user._id,
+  }).then((user) => {
+    res.render("pages/auth/settings", {
+      errors: [],
+      user
+    });
+  });
+};
+
 // Login Form POST
 exports.loginUser = (req, res, next) => {
   try {
@@ -94,4 +106,22 @@ exports.logOut = (req, res) => {
   req.logout();
   req.flash("success_msg", "You are logged out");
   res.redirect("/auth/login");
+};
+
+// Update user settings
+exports.updateSettings = async (req, res) => {
+  User.findOne({
+    _id: req.user._id
+  })
+  .then(user => {
+    // new values
+    user.email = req.body.email || user.email;
+    user.first_name = req.body.first_name || user.first_name;
+    user.last_name = req.body.last_name || user.last_name;
+    user.save()
+      .then(user => {
+        req.flash('success_msg', 'User settings successfully updated');
+        res.redirect('/auth/settings');
+      })
+  });
 };

@@ -1,4 +1,8 @@
+const { query } = require("express-validator");
 const mongoose = require("mongoose");
+
+require("../models/Post");
+const Post = mongoose.model("Post");
 
 const categorySchema = new mongoose.Schema(
   {
@@ -16,8 +20,9 @@ const categorySchema = new mongoose.Schema(
   }
 );
 
-categorySchema.pre('remove', function(next) {
-  this.model('Post').remove({ category: this._id }, next);
+categorySchema.pre('deleteOne', async function() {
+  const docToDelete = await this.model.findOne(this.getQuery());
+  await Post.deleteMany({ category: docToDelete._id });
 });
 
 mongoose.model("Category", categorySchema);

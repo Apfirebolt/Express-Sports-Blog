@@ -5,10 +5,14 @@ const router = express.Router();
 const {
   getLoginForm,
   getRegisterForm,
+  getSettingsForm,
   logOut,
   loginUser,
-  registerUser
+  registerUser,
+  updateSettings
 } = require('../controllers/authController.js');
+
+const { ensureAuthenticated } = require('../helpers/auth');
 
 router.route('/register')
   .get(getRegisterForm)
@@ -25,7 +29,8 @@ router.route('/login')
     body('email', 'Email field is required').notEmpty(),
     body('password', 'Password field is required').notEmpty(),
   ], loginUser)
-router.route('/logout')
-  .get(logOut)
+router.route('/settings')
+  .get(ensureAuthenticated, getSettingsForm)
+  .post(ensureAuthenticated, updateSettings)
 
 module.exports = router;
