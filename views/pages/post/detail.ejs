@@ -13,7 +13,7 @@
           <h6 class="card-subtitle mb-2 text-muted">
             <%= post.category.name%>
           </h6>
-          <p class="card-text wrapped-space"><%= post.description%></p>
+          <p class="card-text wrapped-space"><%- post.description%></p>
         </div>
         <% if(!post.pictures){ %>
           <h4 class="text-center my-2 text-secondary">No pictures available for this post</h4>

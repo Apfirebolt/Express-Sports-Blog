@@ -84,24 +84,36 @@ exports.createCategory = (req, res) => {
 
 // Detail Category
 exports.detailCategory = (req, res) => {
-  Category.findOne({ createdBy: req.user._id, _id: req.params.categoryId }).then(
-    (category) => {
-      res.render("pages/category/detail", {
-        category,
-      });
-    }
-  );
-};
-
-// List Category
-exports.listCategory = (req, res) => {
-  Category.find({ createdBy: req.user._id }).then((categories) => {
-    res.render("pages/category/list", {
-      categories,
-      moment,
-      errors: []
+  Category.findOne({
+    createdBy: req.user._id,
+    _id: req.params.categoryId,
+  }).then((category) => {
+    res.render("pages/category/detail", {
+      category,
     });
   });
+};
+
+// List Category, add query params for pagination
+exports.listCategory = (req, res) => {
+  const itemsPerPage = 2;
+  const startPage = req.query.page || 1;
+  Category.find({ createdBy: req.user._id })
+    .skip(itemsPerPage * startPage - itemsPerPage)
+    .limit(itemsPerPage)
+    .exec(function (err, categories) {
+      Category.countDocuments().exec(function (err, count) {
+        if (err) return next(err);
+        res.render("pages/category/list", {
+          categories,
+          moment,
+          errors: [],
+          itemsPerPage,
+          startPage,
+          lastPage: Math.ceil(count / itemsPerPage),
+        });
+      });
+    });
 };
 
 // Post Confirm Delete Category
@@ -127,7 +139,8 @@ exports.updateCategory = async (req, res) => {
   } else {
     Category.findOneAndUpdate(
       {
-        createdBy: req.user._id, _id: req.params.categoryId
+        createdBy: req.user._id,
+        _id: req.params.categoryId,
       },
       { name: req.body.name },
       {
@@ -141,4 +154,3 @@ exports.updateCategory = async (req, res) => {
     });
   }
 };
-

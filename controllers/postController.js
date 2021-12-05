@@ -19,6 +19,7 @@ exports.getCreatePostForm = (req, res) => {
       if (categories) {
         res.render("pages/post/create", {
           categories,
+          errors: []
         });
       }
     });
