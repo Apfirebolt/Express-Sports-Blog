@@ -34,7 +34,7 @@
           <label for="exampleInputEmail1">Last Name</label>
           <input type="text" class="form-control" name="last_name" value="<%= user.last_name %>" placeholder="Enter Last Name">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary mx-auto">Update Settings</button>
       </form>
       <h5 class="text-center my-2 text-success">CHANGE PASSWORD</h5>
       <form action="/auth/change-password" method="post" class="w-50 mx-auto my-3">
@@ -46,8 +46,33 @@
           <label for="password2">Confirm Password</label>
           <input type="password" class="form-control" name="password2" id="password2" placeholder="Confirm Password">
         </div>
-        <button type="submit" class="btn btn-primary">Change Password</button>
+        <button type="submit" class="btn btn-primary mx-auto">Change Password</button>
       </form>
+      <h5 class="text-center my-2 text-success">CHANGE PROFILE PICTURE</h5>
+      <div class="row">
+        <div class="col-md-6 d-flex justify-content-center">
+          <%if (user.profile_picture) { %>
+            <img src="/uploads/<%= user.profile_picture%>" alt="Image not available" class="profile-image">
+          <% } %>
+        </div>
+        <form
+        action="/auth/change-picture"
+        method="post"
+        class="col-md-6 mx-auto my-3"
+        enctype="multipart/form-data"
+      >
+        <div class="form-group">
+          <label for="file">Update Profile Picture</label>
+          <input
+            type="file"
+            name="file"
+            class="form-control-file"
+            id="file"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary mx-auto">Change Picture</button>
+      </form>
+      </div>
     </main>
 
     <footer><%- include('../../partials/footer'); %></footer>

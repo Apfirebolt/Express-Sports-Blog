@@ -10,10 +10,13 @@ const {
   loginUser,
   registerUser,
   updateSettings,
-  updatePassword
+  updatePassword,
+  updateProfilePicture
 } = require('../controllers/authController.js');
 
 const { ensureAuthenticated } = require('../helpers/auth');
+
+const { profilePictureUpload } = require('../utils/file-upload');
 
 router.route('/register')
   .get(getRegisterForm)
@@ -35,6 +38,8 @@ router.route('/settings')
   .post(ensureAuthenticated, updateSettings)
 router.route('/change-password')
   .post(ensureAuthenticated, updatePassword)
+router.route('/change-picture')
+  .post(ensureAuthenticated, profilePictureUpload.single('file'), updateProfilePicture)
 router.route('/logout')
   .get(ensureAuthenticated, logOut)
 

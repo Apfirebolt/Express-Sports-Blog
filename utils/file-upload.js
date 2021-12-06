@@ -11,6 +11,15 @@ imageStorage = multer.diskStorage({
   },
 });
 
+profilePictureStorage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename(req, file, cb) {
+    cb(null, `profile-${Date.now()}${path.extname(file.originalname)}`);
+  },
+});
+
 videoStorage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, "uploads/");
@@ -59,5 +68,16 @@ exports.videoUpload = multer({
   },
   fileFilter: function(req, file, cb) {
     checkVideoFileType(file, cb);
+  }
+})
+
+exports.profilePictureUpload = multer({
+  storage: profilePictureStorage,
+  limits: {
+    fieldNameSize: 300,
+    fileSize: 2097152, // 2 Mb
+  },
+  fileFilter: function(req, file, cb) {
+    checkFileType(file, cb);
   }
 })

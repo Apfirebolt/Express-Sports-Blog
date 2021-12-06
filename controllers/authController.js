@@ -151,3 +151,19 @@ exports.updatePassword = async (req, res) => {
     });
   }
 };
+
+// Update user profile picture
+exports.updateProfilePicture = async (req, res) => {
+  User.findOne({
+    _id: req.user._id
+  })
+  .then(user => {
+    // update profile image and call save method
+    user.profile_picture = req.file.filename
+    user.save()
+      .then(user => {
+        req.flash('success_msg', 'User profile picture successfully changed');
+        res.redirect('/auth/settings');
+      })
+  });
+};
