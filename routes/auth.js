@@ -9,7 +9,8 @@ const {
   logOut,
   loginUser,
   registerUser,
-  updateSettings
+  updateSettings,
+  updatePassword
 } = require('../controllers/authController.js');
 
 const { ensureAuthenticated } = require('../helpers/auth');
@@ -32,5 +33,9 @@ router.route('/login')
 router.route('/settings')
   .get(ensureAuthenticated, getSettingsForm)
   .post(ensureAuthenticated, updateSettings)
+router.route('/change-password')
+  .post(ensureAuthenticated, updatePassword)
+router.route('/logout')
+  .get(ensureAuthenticated, logOut)
 
 module.exports = router;

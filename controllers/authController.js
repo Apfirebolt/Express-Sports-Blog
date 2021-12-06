@@ -125,3 +125,29 @@ exports.updateSettings = async (req, res) => {
       })
   });
 };
+
+// Update user password
+exports.updatePassword = async (req, res) => {
+  const errors = [];
+  if (req.body.password !== req.body.password2) {
+    errors.push("Confirm password is not same as the password.");
+  }
+  if (errors.length > 0) {
+    res.render("pages/auth/settings", {
+      errors: errors,
+    });
+  } else {
+    User.findOne({
+      _id: req.user._id
+    })
+    .then(user => {
+      // update password and call save method
+      user.password = req.body.password
+      user.save()
+        .then(user => {
+          req.flash('success_msg', 'User password successfully changed');
+          res.redirect('/auth/settings');
+        })
+    });
+  }
+};
