@@ -1,36 +1,38 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">Express Sports</a>
-  <img src="/images/Soccer_ball.svg.png" height="40" width="50" class="m-2">
-  <% if(user){ %>
-  <h5 class="ml-3 text-secondary">Hello, <%= user.first_name%></h5>
-  <ul class="navbar-nav ml-auto">
-    <li class="nav-item">
-      <a class="nav-link" href="/">Home</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/category">Category</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/post">Post</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/category/create">Add Category</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/post/create">Add Post</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link btn btn-warning" href="/auth/logout">Log Out</a>
-    </li>
-  </ul>
-  <% } else{ %>
-  <ul class="navbar-nav ml-auto">
-    <li class="nav-item">
-      <a class="nav-link" href="/auth/login">Login</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/auth/register">Register</a>
-    </li>
-  </ul>
-  <% } %>
-</nav>
+<!-- ======= Header ======= -->
+<header id="header" class="d-flex align-items-center">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div class="logo">
+      <h1 class="text-light">
+        <img src="/images/Soccer_ball.svg.png" height="40" width="50" class="m-2">
+        <a href="index.html"><span>Sports Blog</span></a>
+      </h1>
+    </div>
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <% if(user){ %>
+          <li><a href="/category">Category</a></li>
+        <li><a href="/post">Post</a></li>
+        <li><a href="/category/create">Add Category</a></li>
+        <li><a href="/post/create">Add Post</a></li>
+        <li class="dropdown">
+          <a href="#"
+            ><span>More</span> <i class="bi bi-chevron-down"></i
+          ></a>
+          <ul>
+            <li><a href="/auth/logout">Log Out</a></li>
+            <li><a href="/auth/settings">Settings</a></li>
+          </ul>
+        </li>
+        <% } else{ %>  
+          <li><a href="/auth/login">Log In</a></li>
+          <li><a href="/auth/register">Register</a></li>
+       <% } %>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav>
+    <!-- .navbar -->
+  </div>
+</header>
+<!-- End Header -->
