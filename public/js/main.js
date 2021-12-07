@@ -6,4 +6,13 @@ window.addEventListener("load", () => {
     once: true,
     mirror: false,
   });
+
+  // Add lightbox for post images
+  const imageLightbox = GLightbox({
+    selector: ".image-lightbox",
+  });
+
+  imageLightbox.on("open", () => {
+    // console.log("Initiated");
+  });
 });
