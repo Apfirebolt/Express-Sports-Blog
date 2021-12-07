@@ -243,8 +243,10 @@ exports.detailPost = (req, res) => {
       createdBy: req.user._id,
     }).then((post) => {
       if (post) {
+        const effects = ['fade-up', 'fade-down', 'fade-right', 'fade-left']
         res.render("pages/post/detail", {
           post,
+          effects
         });
       }
     });
