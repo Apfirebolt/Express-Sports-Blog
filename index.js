@@ -14,6 +14,7 @@ const app = express();
 const authRoutes = require('./routes/auth');
 const categoryRoutes = require('./routes/blog');
 const postRoutes = require('./routes/post');
+const userRoutes = require('./routes/user');
 
 // Passport Config
 require('./config/passport')(passport);
@@ -83,6 +84,7 @@ app.get("/", (req, res) => {
 app.use('/auth', authRoutes);
 app.use('/category', categoryRoutes);
 app.use('/post', postRoutes);
+app.use('/users', userRoutes);
 
 app.use((error, req, res, next) => {
   res.render("pages/error", {
