@@ -44,7 +44,6 @@ exports.loginUser = (req, res, next) => {
         errors: fieldErrors,
       });
     }
-    console.log('Inside login function', errors);
     passport.authenticate("local", {
       successRedirect: "/category",
       failureRedirect: "/auth/login",

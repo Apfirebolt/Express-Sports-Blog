@@ -56,6 +56,10 @@ complex queries.
 
 - Adding videos to post functionality completed, only a single video can be added to each post. Screenshots have been added for the same, max size for the video you can upload is 10 MB.
 
+## Testing
+
+- Adding automated testing using Mocha, Chai and Sinon
+
 ## Project Screenshots
 
 Please find some of the screenshots of the application. Below is the screenshot of the Register Page.
