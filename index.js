@@ -18,6 +18,7 @@ const userRoutes = require('./routes/user');
 
 // Passport Config
 require('./config/passport')(passport);
+require('./config/google-passport');
 
 dotenv.config();
 // Map global promise - get rid of warning
@@ -41,6 +42,12 @@ const store = new MongoDBStore({
   uri: process.env.MONGO_URI,
   collection: "sessions",
 });
+
+// Check user logged in
+const checkAuth = (req, res, next) => {
+  console.log(req.user)
+  req.user ? next() : res.sendStatus(401);
+}
 
 // Express session middleware
 app.use(
@@ -79,6 +86,24 @@ app.get("/", (req, res) => {
     title: title,
   });
 });
+
+// Authenticate using Google
+app.get("/google", passport.authenticate('google', { scope: ['email', 'profile'] }))
+app.get("/google/callback", (req, res) => {
+  passport.authenticate('google', {
+    successRedirect: '/protected',
+    failureRedirect: '/auth/failed'
+  })
+
+})
+
+app.get("/auth/failed", (req, res) => {
+  res.send('Google auth failed');
+})
+
+app.get("/protected", checkAuth, (req, res) => {
+  res.send('Inside protected route')
+})
 
 // Use routes
 app.use('/auth', authRoutes);
