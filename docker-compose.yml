@@ -14,6 +14,8 @@ services:
     restart: unless-stopped
     ports:
       - '27017:27017'
+    volumes:
+      - data-volume:/data/db
 
   nginx:
     container_name: sports-nginx
@@ -24,6 +26,10 @@ services:
 
     ports:
       - '80:80'
+  
+volumes:
+  data-volume:
+  node_modules:
 
 
 
